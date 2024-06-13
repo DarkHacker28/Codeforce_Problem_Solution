@@ -1,0 +1,48 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+ 
+// Function to count good prefixes for a given array
+int count_good_prefixes(vector<int>& array) {
+    int n = array.size();
+    int max_prefix_sum = 0;
+    long long sum = 0;
+    int good_prefixes = 0;
+ 
+    // Iterate through the array
+    for (int i = 0; i < n; i++) {
+        sum += array[i];
+        max_prefix_sum = max(max_prefix_sum, array[i]);
+        
+        // Check if the prefix is good
+        if (max_prefix_sum * 2 == sum) {
+            good_prefixes++;
+        }
+    }
+    
+    return good_prefixes;
+}
+ 
+// Main function
+int main() {
+    int t;
+    cin >> t; // Number of test cases
+    
+    // Iterate through each test case
+    while (t--) {
+        int n;
+        cin >> n; // Number of elements in the array
+        vector<int> array(n);
+        
+        // Input array elements
+        for (int i = 0; i < n; i++) {
+            cin >> array[i];
+        }
+        
+        // Count good prefixes for the current array and print the result
+        cout << count_good_prefixes(array) << endl;
+    }
+ 
+    return 0;
+}
