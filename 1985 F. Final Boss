@@ -1,0 +1,59 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <utility>
+ 
+using namespace std;
+ 
+long long int min_turns_to_beat_boss(long long int h, int n, vector<long long int>& a, vector<long long int>& c) {
+    priority_queue<pair<long long int, int>, vector<pair<long long int, int>>, greater<pair<long long int, int>>> q;
+    for (int i = 0; i < n; ++i) {
+        q.push({1, i}); 
+    }
+ 
+    long long int t = 1;
+    long long int d = 0;
+ 
+    while (h > 0) {
+        long long int nxt = q.top().first; 
+ 
+        while (!q.empty() && q.top().first == nxt) {
+            int idx = q.top().second;
+            q.pop();
+ 
+            h -= a[idx]; 
+            q.push({nxt + c[idx], idx});
+        }
+ 
+        d = nxt;
+        ++t;
+    }
+ 
+    return d;
+}
+ 
+int main() {
+    int t;
+    cin >> t;
+ 
+    for (int i = 0; i < t; ++i) {
+        long long int h;
+        int n;
+        cin >> h >> n;
+ 
+        vector<long long int> a(n);
+        vector<long long int> c(n);
+        
+        for (int j = 0; j < n; ++j) {
+            cin >> a[j];
+        }
+        
+        for (int j = 0; j < n; ++j) {
+            cin >> c[j];
+        }
+ 
+        cout << min_turns_to_beat_boss(h, n, a, c) << endl;
+    }
+ 
+    return 0;
+}
