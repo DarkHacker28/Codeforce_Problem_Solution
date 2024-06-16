@@ -1,0 +1,38 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+ 
+const int MOD = 1e9 + 7;
+const int MAX = 1e6;
+ 
+// Function prototype
+void solve();
+ 
+int main() {
+    int test;
+    cin >> test;
+    while (test--) {
+        solve();
+    }
+ 
+    return 0;
+}
+ 
+void solve() {
+    long long n, first, second;
+    cin >> n >> first >> second;
+ 
+    if (second < first) {
+        cout << n * first << endl;
+    } else {
+        long long x = min(n, second - first);
+        long long y = n - x;
+        long long c = second - x;
+ 
+        long long ans = y * first + (second * (second + 1) / 2) - (c * (c + 1) / 2);
+ 
+        cout << ans << endl;
+    }
+ 
+    return;
+}
