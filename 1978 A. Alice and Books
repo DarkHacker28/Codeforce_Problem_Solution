@@ -1,0 +1,36 @@
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+ 
+void solve() {
+    int num_books;
+    cin >> num_books;
+    
+    vector<int> pages(num_books - 1); // Pages of first (num_books - 1) books
+    for (auto &page : pages) {
+        cin >> page;
+    }
+    
+    int last_book_pages;
+    cin >> last_book_pages; // Pages of the last book
+    
+    sort(pages.begin(), pages.end()); // Sort pages of first (num_books - 1) books
+    
+    // Maximum pages Alice can read
+    last_book_pages += pages.back(); // Add the page count of the highest numbered book from the first pile
+    
+    cout << last_book_pages << endl;
+}
+ 
+int main() {
+    int test_cases;
+    cin >> test_cases;
+    
+    while (test_cases--) {
+        solve();
+    }
+    
+    return 0;
+}
