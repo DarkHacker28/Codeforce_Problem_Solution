@@ -1,0 +1,58 @@
+#include <iostream>
+#include <vector>
+#include <numeric>
+using namespace std;
+
+int gcd(int a, int b) {
+    while (b) {
+        a %= b;
+        swap(a, b);
+    }
+    return a;
+}
+
+int lcm(int a, int b) {
+    return a / gcd(a, b) * b;
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    int t;
+    cin >> t;
+
+    while (t--) {
+        int n;
+        cin >> n;
+
+        vector<int> k(n);
+        for (int i = 0; i < n; ++i) {
+            cin >> k[i];
+        }
+
+        // Compute the least common multiple of all k[i]
+        int common_denominator = k[0];
+        for (int i = 1; i < n; ++i) {
+            common_denominator = lcm(common_denominator, k[i]);
+        }
+
+        int sum_numerators = 0;
+        vector<int> bets(n);
+        for (int i = 0; i < n; ++i) {
+            bets[i] = common_denominator / k[i];
+            sum_numerators += bets[i];
+        }
+
+        if (sum_numerators < common_denominator) {
+            for (int i = 0; i < n; ++i) {
+                cout << bets[i] << " ";
+            }
+            cout << "\n";
+        } else {
+            cout << "-1\n";
+        }
+    }
+
+    return 0;
+}
