@@ -1,0 +1,39 @@
+#include <iostream>
+#include <vector>
+#include <cmath>
+
+using namespace std;
+
+// Function to compute the length of the longest common subsegment
+int longest_common_subsegment_length(int x, int y) {
+    int d = x ^ y;  // XOR to find differing bits
+    int k = 0;
+    
+    // Find the length of the longest sequence of zero bits in the result of d
+    while ((d & 1) == 0 && d != 0) {
+        d >>= 1;
+        k++;
+    }
+    
+    return 1 << k;  // 2^k
+}
+
+int main() {
+    int t;
+    cin >> t;
+    
+    vector<int> results;
+    results.reserve(t);
+    
+    for (int i = 0; i < t; ++i) {
+        int x, y;
+        cin >> x >> y;
+        results.push_back(longest_common_subsegment_length(x, y));
+    }
+    
+    for (int result : results) {
+        cout << result << endl;
+    }
+    
+    return 0;
+}
