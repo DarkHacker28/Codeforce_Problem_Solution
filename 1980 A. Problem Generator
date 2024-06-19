@@ -1,0 +1,53 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <unordered_map>
+using namespace std;
+
+void minimum_problems_needed(int t, vector<pair<int, int>>& nm, vector<string>& problems) {
+    vector<int> results(t);
+    
+    for (int i = 0; i < t; ++i) {
+        int n = nm[i].first;
+        int m = nm[i].second;
+        string a = problems[i];
+        
+        // Frequency array for each difficulty level
+        unordered_map<char, int> problem_count = {{'A', 0}, {'B', 0}, {'C', 0}, {'D', 0}, {'E', 0}, {'F', 0}, {'G', 0}};
+        
+        // Count the number of problems of each difficulty level
+        for (char c : a) {
+            problem_count[c]++;
+        }
+        
+        int additional_problems = 0;
+        // Check each difficulty level
+        for (char c = 'A'; c <= 'G'; ++c) {
+            if (problem_count[c] < m) {
+                additional_problems += (m - problem_count[c]);
+            }
+        }
+        
+        results[i] = additional_problems;
+    }
+    
+    for (int result : results) {
+        cout << result << endl;
+    }
+}
+
+int main() {
+    int t;
+    cin >> t;
+    vector<pair<int, int>> nm(t);
+    vector<string> problems(t);
+    
+    for (int i = 0; i < t; ++i) {
+        cin >> nm[i].first >> nm[i].second;
+        cin >> problems[i];
+    }
+    
+    minimum_problems_needed(t, nm, problems);
+    
+    return 0;
+}
