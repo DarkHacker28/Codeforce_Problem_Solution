@@ -1,0 +1,69 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+// Function to check if a GCD sequence is non-decreasing
+bool good(vector<int>& b) {
+    int g = __gcd(b[0], b[1]);
+    for (int i = 1; i < int(b.size()) - 1; i++) {
+        int cur_gcd = __gcd(b[i], b[i + 1]);
+        if (g > cur_gcd)
+            return false;
+        g = cur_gcd;
+    }
+    return true;
+}
+
+// Function to solve each test case
+bool solve() {
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+    }
+
+    int g = -1;
+    int to_del = -1;
+    
+    // Find the first occurrence where GCD decreases
+    for (int i = 0; i < n - 1; i++) {
+        int cur_gcd = __gcd(a[i], a[i + 1]);
+        if (cur_gcd < g) {
+            to_del = i;
+            break;
+        }
+        g = cur_gcd;
+    }
+    
+    // If no decrease found, original sequence is already non-decreasing
+    if (to_del == -1) return true;
+    
+    // Create three new arrays to test removal of a[to_del-1], a[to_del], or a[to_del+1]
+    vector<int> b0 = a, b1 = a, b2 = a;
+    
+    // Remove a[to_del-1] if possible
+    if (to_del > 0) b0.erase(b0.begin() + to_del - 1);
+    
+    // Remove a[to_del]
+    b1.erase(b1.begin() + to_del);
+    
+    // Remove a[to_del+1] if possible
+    if (to_del < n - 1) b2.erase(b2.begin() + to_del + 1);
+    
+    // Check if any of the modified arrays have a non-decreasing GCD sequence
+    return good(b0) || good(b1) || good(b2);
+}
+
+int main() {
+    int t;
+    cin >> t;
+    
+    // Process each test case
+    while (t--) {
+        cout << (solve() ? "YES" : "NO") << endl;
+    }
+
+    return 0;
+}
