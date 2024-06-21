@@ -1,0 +1,23 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int max_score(int l, int r) {
+    int max_t = floor(log2(r));
+    return max_t;
+}
+
+int main() {
+    int t;
+    cin >> t;
+
+    for (int i = 0; i < t; ++i) {
+        int l, r;
+        cin >> l >> r;
+        
+        int result = max_score(l, r);
+        cout << result << "\n";
+    }
+
+    return 0;
+}
