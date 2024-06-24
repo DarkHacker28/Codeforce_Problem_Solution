@@ -1,0 +1,31 @@
+#include <iostream>
+#include <vector>
+#include <cmath>
+using namespace std;
+
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int n;
+        cin >> n;
+        vector<long long> a(n), b(n + 1);
+        for (auto& x : a) cin >> x;
+        for (auto& x : b) cin >> x;
+        
+        long long sum = 0, him = LLONG_MAX;
+        
+        for (int i = 0; i < n; ++i) {
+            sum += abs(a[i] - b[i]);
+            him = min(him, abs(a[i] - b[n]));
+            him = min(him, abs(b[i] - b[n]));
+            if (min(a[i], b[i]) <= b[n] && b[n] <= max(a[i], b[i])) {
+                him = 0;
+            }
+        }
+        
+        cout << sum + him + 1 << '\n';
+    }
+    
+    return 0;
+}
