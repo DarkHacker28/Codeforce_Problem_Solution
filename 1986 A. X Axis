@@ -1,0 +1,28 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+ 
+int main() {
+    int t;
+    cin >> t;
+ 
+    while (t--) {
+        int x1, x2, x3;
+        cin >> x1 >> x2 >> x3;
+        
+        // Create an array of the three points and sort it
+        int points[3] = {x1, x2, x3};
+        sort(points, points + 3);
+        
+        // The median is the second element in the sorted array
+        int median = points[1];
+        
+        // Calculate the total distance to the median
+        int total_distance = abs(median - points[0]) + abs(median - points[1]) + abs(median - points[2]);
+        
+        // Output the result
+        cout << total_distance << endl;
+    }
+ 
+    return 0;
+}
