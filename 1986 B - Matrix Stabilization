@@ -1,0 +1,73 @@
+#include <iostream>
+using namespace std;
+ 
+int main() {
+    int t;
+    cin >> t;
+    
+    while (t--) {
+        int n, m;
+        cin >> n >> m;
+        
+        int matrix[n][m];
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
+                cin >> matrix[i][j];
+            }
+        }
+        
+        // Iterate through each cell of the matrix
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
+                int max_neighbor = 0;
+                bool is_target = true;
+                
+                // Check neighbors
+                if (i - 1 >= 0) {
+                    max_neighbor = max(max_neighbor, matrix[i - 1][j]);
+                    if (matrix[i][j] <= matrix[i - 1][j]) {
+                        is_target = false;
+                    }
+                }
+                if (j - 1 >= 0) {
+                    max_neighbor = max(max_neighbor, matrix[i][j - 1]);
+                    if (matrix[i][j] <= matrix[i][j - 1]) {
+                        is_target = false;
+                    }
+                }
+                if (i + 1 < n) {
+                    max_neighbor = max(max_neighbor, matrix[i + 1][j]);
+                    if (matrix[i][j] <= matrix[i + 1][j]) {
+                        is_target = false;
+                    }
+                }
+                if (j + 1 < m) {
+                    max_neighbor = max(max_neighbor, matrix[i][j + 1]);
+                    if (matrix[i][j] <= matrix[i][j + 1]) {
+                        is_target = false;
+                    }
+                }
+                
+                // If this cell is a target, update it
+                if (is_target) {
+                    matrix[i][j] = max_neighbor;
+                }
+            }
+        }
+        
+        // Output the stabilized matrix
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
+                cout << matrix[i][j] << " ";
+            }
+            cout << endl;
+        }
+        
+        // Separate test cases with a blank line, except after the last one
+        if (t > 0) {
+            cout << endl;
+        }
+    }
+    
+    return 0;
+}
