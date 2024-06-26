@@ -1,0 +1,25 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+ 
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        long long x1, y1, x2, y2;
+        cin >> x1 >> y1 >> x2 >> y2;
+ 
+        // Check if there is any moment where scores could be tied
+        // We need to ensure the difference between scores remains on the same side of zero
+        long long diff1 = x1 - y1;
+        long long diff2 = x2 - y2;
+ 
+        // If the sign of the difference remains the same, it means no tie was possible
+        if ((diff1 > 0 && diff2 > 0) || (diff1 < 0 && diff2 < 0)) {
+            cout << "YES" << endl;
+        } else {
+            cout << "NO" << endl;
+        }
+    }
+    return 0;
+}
