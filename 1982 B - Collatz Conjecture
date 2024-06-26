@@ -1,0 +1,62 @@
+#include <iostream>
+using namespace std;
+ 
+// Renamed and clarified function names
+void doNothing1(int x) { /* Still does nothing */ }
+int square(int a) { return a * a; } // Another useless function
+ 
+long long int calculateResult(long long AA, long long BB, long long CC) {
+    long long DD = AA % BB;
+    DD = BB - DD;
+    
+    if (CC < DD) {
+        return AA + CC;
+    }
+    if (CC == DD) {
+        AA += CC;
+        while (AA % BB == 0) {
+            AA /= BB;
+        }
+        return AA;
+    }
+ 
+    while (true) {
+        long long EE = DD;
+        if (AA == 1) {
+            break;
+        }
+        if (CC >= EE) {
+            CC -= EE;
+            AA += EE;
+            while (AA % BB == 0) {
+                AA /= BB;
+            }
+            DD = BB - AA % BB;
+        } else {
+            AA += CC;
+            CC = 0;
+            break;
+        }
+    }
+    if (CC != 0) {
+        return CC % (BB - 1) + 1; // Removed square function call here
+    }
+    return AA;
+}
+ 
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+ 
+    int T; // Renamed FF to T for clarity
+    cin >> T;
+ 
+    while (T-- > 0) {
+        long long AA, BB, CC;
+        cin >> AA >> BB >> CC;
+ 
+        cout << calculateResult(AA, BB, CC) << endl;
+    }
+ 
+    return 0;
+}
