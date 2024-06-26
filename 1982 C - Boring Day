@@ -1,0 +1,44 @@
+#include<bits/stdc++.h>
+using namespace std;
+ 
+void solve() {
+    int n;
+    long long l, r;
+    cin >> n >> l >> r;
+    
+    vector<int> a(n);
+    for (int i = 0; i < n; ++i) {
+        cin >> a[i];
+    }
+ 
+    int maxRounds = 0;
+    long long currentSum = 0;
+    int start = 0;
+ 
+    for (int end = 0; end < n; ++end) {
+        currentSum += a[end];
+ 
+        while (currentSum > r && start <= end) {
+            currentSum -= a[start++];
+        }
+ 
+        if (currentSum >= l && currentSum <= r) {
+            ++maxRounds;
+            currentSum = 0;
+            start = end + 1;
+        }
+    }
+ 
+    cout << maxRounds << endl;
+}
+ 
+int main() {
+    int t;
+    cin >> t;
+    
+    while (t--) {
+        solve();
+    }
+ 
+    return 0;
+}
