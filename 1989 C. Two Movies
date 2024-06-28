@@ -1,0 +1,73 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cmath>
+
+using namespace std;
+
+void solve() {
+    int n;
+    cin >> n;
+
+    vector<int> revA(n), revB(n);
+    for (int i = 0; i < n; ++i) {
+        cin >> revA[i];
+    }
+    for (int i = 0; i < n; ++i) {
+        cin >> revB[i];
+    }
+
+    int bothPos = 0, bothNeg = 0;
+    int curA = 0, curB = 0;
+
+    for (int j = 0; j < n; ++j) {
+        int a = revA[j];
+        int b = revB[j];
+
+        if (a == 0 && b == 0) {
+            continue;
+        } else if (a > b) {
+            curA += a;
+        } else if (b > a) {
+            curB += b;
+        } else if (a == 1 && b == 1) {
+            bothPos += 1;
+        } else {
+            bothNeg += 1;
+        }
+    }
+
+    int lowerNum = min(curA, curB);
+    int higherNum = max(curA, curB);
+
+    if ((higherNum - lowerNum) > bothPos) {
+        lowerNum += min(bothPos, higherNum - lowerNum);
+    } else {
+        int remain = bothPos - (higherNum - lowerNum);
+        lowerNum += min(bothPos, higherNum - lowerNum);
+        lowerNum += remain / 2;
+        higherNum += remain - remain / 2;
+    }
+
+    if ((higherNum - lowerNum) > bothNeg) {
+        higherNum -= min(bothNeg, higherNum - lowerNum);
+    } else {
+        int remain = bothNeg - (higherNum - lowerNum);
+        higherNum -= min(bothNeg, higherNum - lowerNum);
+        lowerNum -= (remain + 1) / 2;
+        higherNum -= remain / 2;
+    }
+
+    cout << lowerNum << endl;
+}
+
+int main() {
+    int t;
+    cin >> t;
+
+    while (t--) {
+        solve();
+    }
+
+    return 0;
+}
