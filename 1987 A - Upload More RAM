@@ -1,0 +1,19 @@
+#include <iostream>
+using namespace std;
+ 
+int main() {
+    int t;
+    cin >> t;
+ 
+    while (t--) {
+        int n, k;
+        cin >> n >> k;
+ 
+        // Calculate the minimum number of seconds needed
+        int min_seconds = (n - 1) * k + 1;
+        
+        // Output the result for this test case
+        cout << min_seconds << endl;
+    }
+ 
+    return 0;
