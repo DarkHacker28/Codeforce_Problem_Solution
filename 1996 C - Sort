@@ -1,0 +1,66 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <cstring> // for memset
+ 
+using namespace std;
+ 
+const int ALPHABET_SIZE = 26;
+ 
+void preprocessPrefixFrequency(const string& s, vector<vector<int>>& prefixFreq) {
+    int n = s.size();
+    prefixFreq.assign(n + 1, vector<int>(ALPHABET_SIZE, 0));
+    
+    for (int i = 0; i < n; ++i) {
+        int charIndex = s[i] - 'a';
+        for (int j = 0; j < ALPHABET_SIZE; ++j) {
+            prefixFreq[i + 1][j] = prefixFreq[i][j];
+        }
+        prefixFreq[i + 1][charIndex]++;
+    }
+}
+ 
+vector<int> getRangeFrequency(const vector<vector<int>>& prefixFreq, int l, int r) {
+    vector<int> freq(ALPHABET_SIZE, 0);
+    for (int j = 0; j < ALPHABET_SIZE; ++j) {
+        freq[j] = prefixFreq[r + 1][j] - prefixFreq[l][j];
+    }
+    return freq;
+}
+ 
+int main() {
+    int t;
+    cin >> t;
+    
+    while (t--) {
+        int n, q;
+        cin >> n >> q;
+        
+        string a, b;
+        cin >> a >> b;
+        
+        vector<vector<int>> prefixFreqA, prefixFreqB;
+        preprocessPrefixFrequency(a, prefixFreqA);
+        preprocessPrefixFrequency(b, prefixFreqB);
+        
+        for (int i = 0; i < q; ++i) {
+            int l, r;
+            cin >> l >> r;
+            l--; r--; // Convert to 0-based index
+            
+            vector<int> freqA = getRangeFrequency(prefixFreqA, l, r);
+            vector<int> freqB = getRangeFrequency(prefixFreqB, l, r);
+            
+            int operations = 0;
+            for (int j = 0; j < ALPHABET_SIZE; ++j) {
+                operations += abs(freqA[j] - freqB[j]);
+            }
+            
+            // Each operation fixes one mismatch for two characters
+            cout << operations / 2 << endl;
+        }
+    }
+    
+    return 0;
+}
