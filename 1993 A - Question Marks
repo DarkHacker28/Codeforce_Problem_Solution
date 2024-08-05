@@ -1,0 +1,41 @@
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+using namespace std;
+ 
+int main() {
+    int t;
+    cin >> t;
+    
+    while (t--) {
+        int n;
+        cin >> n;
+        string s;
+        cin >> s;
+        
+        unordered_map<char, int> count;
+        count['A'] = 0;
+        count['B'] = 0;
+        count['C'] = 0;
+        count['D'] = 0;
+        int question_marks = 0;
+        
+        for (char ch : s) {
+            if (ch == '?') {
+                question_marks++;
+            } else {
+                count[ch]++;
+            }
+        }
+        
+        int max_score = 0;
+        for (char ch = 'A'; ch <= 'D'; ++ch) {
+            max_score += min(n, count[ch]);
+            question_marks -= max(0, n - count[ch]);
+        }
+        
+        cout << max_score << endl;
+    }
+    
+    return 0;
+}
