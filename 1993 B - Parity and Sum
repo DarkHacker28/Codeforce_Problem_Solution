@@ -1,0 +1,61 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+ 
+using namespace std;
+ 
+void sol() {
+    int n;
+    cin >> n;
+    vector<int> even, odd;
+    long long x;
+ 
+    // Separate even and odd numbers
+    for (int i = 0; i < n; ++i) {
+        cin >> x;
+        if (x % 2 == 0)
+            even.push_back(x);
+        else
+            odd.push_back(x);
+    }
+ 
+    // If all numbers are even or all are odd, no operations needed
+    if (even.empty() || odd.empty()) {
+        cout << 0 << endl;
+        return;
+    }
+ 
+    // Sort the even and odd arrays
+    sort(odd.begin(), odd.end());
+    sort(even.begin(), even.end());
+ 
+    // The largest odd number
+    long long val = odd.back();
+    int sum = 0;
+ 
+    // Try to make the largest odd number even
+    for (int i = 0; i < even.size(); ++i) {
+        if (val > even[i]) {
+            val += even[i];
+            ++sum;
+        } else {
+            cout << 2 + even.size() - 1 << endl;
+            return;
+        }
+    }
+ 
+    cout << sum << endl;
+}
+ 
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+ 
+    int t;
+    cin >> t;
+    while (t--) {
+        sol();
+    }
+ 
+    return 0;
+}
