@@ -1,0 +1,33 @@
+#include<iostream>
+#include<string>
+#include<stack>
+using namespace std;
+ 
+int main() {
+    int a;
+    cin >> a;
+    while (a--) {
+        string b;
+        int c;
+        cin >> c;
+        cin >> b;
+        stack<int> d;
+        int e = 0;
+        for (int f = 0; f < c; f++) {
+            if (b[f] == '_') {
+                if (!d.empty()) {
+                    e += f - d.top();
+                    d.pop();
+                } else {
+                    d.push(f);
+                }
+            } else if (b[f] == '(') {
+                d.push(f);
+            } else {
+                e += f - d.top();
+                d.pop();
+            }
+        }
+        cout << e << endl;
+    }
+}
