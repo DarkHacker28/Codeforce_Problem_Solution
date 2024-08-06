@@ -1,0 +1,43 @@
+#include <iostream>
+using namespace std;
+ 
+void solve() {
+    int n, k;
+    cin >> n >> k;
+ 
+    if (k == 0) {
+        cout << 0;
+        return;
+    }
+ 
+    if (k <= n) {
+        cout << 1;
+        return;
+    }
+ 
+    int ans = 1; // Start with the first diagonal
+    k -= n; // Chips placed on the first diagonal
+    int num = n - 1; // Number of cells in the next diagonal
+ 
+    while (k > 0) {
+        ans++; // Move to the next diagonal
+        k -= num; // Place chips on the diagonal
+        if (k > 0) {
+            ans++; // Need another diagonal if chips are still left
+            k -= num; // Place chips on the diagonal
+        }
+        num--; // Decrease the number of cells available for the next diagonal
+    }
+ 
+    cout << ans;
+}
+ 
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        solve();
+        cout << endl; // Move to the next line for the next test case
+    }
+    return 0;
+}
