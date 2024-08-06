@@ -1,0 +1,72 @@
+#include <iostream>
+#include <vector>
+#include <map>
+using namespace std;
+ 
+#define ll long long
+ 
+void solve() {
+    int n;
+    ll m;
+    cin >> n >> m;
+    
+    vector<ll> p(n), q(n);
+    for (int i = 0; i < n; ++i) {
+        cin >> p[i];
+    }
+    for (int i = 0; i < n; ++i) {
+        cin >> q[i];
+    }
+    
+    map<ll, ll> pq_map;
+    for (int i = 0; i < n; ++i) {
+        pq_map[p[i]] = q[i];
+    }
+    
+    ll max_profit = 0;
+    for (auto it = pq_map.begin(); it != pq_map.end(); ++it) {
+        ll price = it->first;
+        ll curr_qty = it->second;
+        ll next_qty = 0;
+        
+        if (pq_map.find(price + 1) != pq_map.end()) {
+            next_qty = pq_map[price + 1];
+        }
+        
+        ll take_from_price = min(curr_qty, m / price);
+        ll remaining_budget = m - take_from_price * price;
+        ll take_from_next = 0;
+        
+        if (next_qty > 0) {
+            take_from_next = min(next_qty, remaining_budget / (price + 1));
+            remaining_budget -= take_from_next * (price + 1);
+        }
+        
+        max_profit = max(max_profit, take_from_price * price + take_from_next * (price + 1));
+        
+        // Additional adjustment
+        ll left_next = next_qty - take_from_next;
+        ll left_budget = remaining_budget;
+        ll can_remove = min(min(take_from_price, left_budget), left_next);
+        take_from_price -= can_remove;
+        take_from_next += can_remove;
+        
+        max_profit = max(max_profit, take_from_price * price + take_from_next * (price + 1));
+    }
+    
+    cout << max_profit << endl;
+}
+ 
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    int num_test_cases;
+    cin >> num_test_cases;
+    
+    while (num_test_cases--) {
+        solve();
+    }
+    
+    return 0;
+}
